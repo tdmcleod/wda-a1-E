@@ -3,7 +3,6 @@
     <head>
         <link type="text/css" rel="stylesheet" href="styles/styles.css" />
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-        <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
         <script>
                 function findme(){
                     navigator.geolocation.getCurrentPosition(doit,broken,{enableHighAccuracy:true});
@@ -54,39 +53,6 @@
                     
                     var marker = new google.maps.Marker(marker_options);
                 }
-                
-                function get_wines(){
-                    var name_string="";
-                    var names=document.getElementsByName("wine_name");
-                    for(var e in names){
-                        name_string = name_string + names[e].innerHTML+"|";
-                    }
-                    
-                    return name_string;
-                }
-                
-                function tweet(){
-                    var url = "utilities.php";
-                    url = url+"?function=send_tweet&message="+get_wines();
-                    var request = new XMLHttpRequest();
-                    request.open("GET", url);
-                    request.onreadystatechange = function(){
-                        if(request.status==200){
-                           display_results(request.responseText);
-                        }
-                    }
-                    request.send(null);
-                }
-                
-                
-                function display_results(message){
-                    
-                  $(document).ready(function(){
-                     var msg = "<div style='height:50px;width:200px;background-color:#000;position:fixed;top:0;left:45%;z-index:200;'>"+message+"</div>";
-                     jQuery("body").append(msg).show('slow');
-                  });
-                }
-                
                 
                 
             </script>

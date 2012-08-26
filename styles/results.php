@@ -94,14 +94,15 @@ function get_wine_info($search_params) {
 
         ";
     
-    $wine_list = "";
     foreach ($conn->query($sql) as $results) {
         
-        $wine_list .=$results["wine_name"].";";
+        if(isset($_SESSION["wines"])){
+            $_SESSION["wines"] =$_SESSION["wines"]+$results['wine_name']+";";
+        }
         
         echo "<tr>
             <td style='text-align:left;width:60px;'>$idx</td>
-            <td name='wine_name'>$results[wine_name]</td>
+            <td>$results[wine_name]</td>
             <td>$results[variety]</td>
             <td>$results[year]</td>
             <td>$results[winery_name]</td>
@@ -115,19 +116,15 @@ function get_wine_info($search_params) {
         $idx++;
     }
     
-    if(isset($_SESSION["wines"])){
-            $_SESSION["wines"].=$wine_list;
-        }
     
     echo "</tbody></table>";
-    return $wine_list;
 }
 
 
 function get_session_wines(){
-    $wines = explode(";",$_SESSION["wines"]);
+    $wines = explode(";",$_SESION["wines"]);
     echo "<table><thead>
-            <tr>
+            <tr><th style='text-align:left;width:60px;'></th>
                 <th>Wine Name</th>
                 </thead>
              <tbody>";
@@ -151,15 +148,15 @@ include('header.php');
     
     
     <?php if(isset($_SESSION["wines"])){ ?>
-    <form id="tracker" action="index.php" method="POST">
+    <form id="tracker" action="index.php">
+            <a href="#" onclick="submit_form()">Stop viewing tracking</a>
             <input type="hidden" name="untrack" value="on" />
-            <input type="submit" name="submit" value="Stop tracking my searches" style="border:0;background: none;text-decoration: underline;color:blue;font-size: 20px;" />
     </form>
     
     
-        <form id="viewer" action="results.php" method="POST">
+        <form id="viewer" action="results.php">
+            <a href="#" onclick="view_wines()">View wines from this session</a>
             <input type="hidden" name="view" value="on" />
-            <input type="submit" name="submit" value="View wines from this session" style="border:0;background: none;text-decoration: underline;color:blue;font-size: 20px;" />
         </form>
     
     <?php } ?>
@@ -168,18 +165,14 @@ include('header.php');
             <div class="results-container">
             <?php 
             
-                //if($_SERVER['HTTP_REFERER'])
-                
                 if(array_key_exists("view", $_POST)){
                     get_session_wines(); 
                 }
                 else{
-                    $results=get_wine_info(process_form($_POST)); 
-                    echo "<button type='button' onclick='tweet()'>Tweet your results</button> ";
-                    
+                    get_wine_info(process_form($_POST)); 
                 }
 
-				
+            
             
             ?>
 

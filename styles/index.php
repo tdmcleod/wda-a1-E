@@ -2,12 +2,12 @@
 <?php require_once('utilities.php'); ?>
 
 <?php 
+    print_r($_POST);
     if(array_key_exists("track", $_POST)){
         $_SESSION["wines"]=";";
     }
     if(array_key_exists("untrack", $_POST)){
-        unset ($_SESSION["wines"]);
-        session_destroy();
+        unset($_SESSION["wines"]);
     }
 
 
@@ -67,16 +67,7 @@
             <form action="index.php" method="POST" id="tracker">
 
                 <input type="hidden" value="on" name="track" />
-                <?php if(!isset ($_SESSION["wines"])) { ?>
-                <input type="submit" name="submit" value="Track the wines I search" style="border:0;background: none;text-decoration: underline;color:blue;font-size: 20px;" />
-                
-                <?php
-                }else{ ?>
-                 
-                <span style="color:#888;font-size: 20px;">Your browsing is currently being tracked...</span>
-                    
-               <?php }
-                ?>
+                <a href="" onclick="submit_form()">Click here to track wines you view</a>
             </form>
          
 

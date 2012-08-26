@@ -94,14 +94,15 @@ function get_wine_info($search_params) {
 
         ";
     
-    $wine_list = "";
     foreach ($conn->query($sql) as $results) {
         
-        $wine_list .=$results["wine_name"].";";
+        if(isset($_SESSION["wines"])){
+            $_SESSION["wines"] .=$results["wine_name"].";";
+        }
         
         echo "<tr>
             <td style='text-align:left;width:60px;'>$idx</td>
-            <td name='wine_name'>$results[wine_name]</td>
+            <td>$results[wine_name]</td>
             <td>$results[variety]</td>
             <td>$results[year]</td>
             <td>$results[winery_name]</td>
@@ -115,12 +116,8 @@ function get_wine_info($search_params) {
         $idx++;
     }
     
-    if(isset($_SESSION["wines"])){
-            $_SESSION["wines"].=$wine_list;
-        }
     
     echo "</tbody></table>";
-    return $wine_list;
 }
 
 
@@ -174,12 +171,10 @@ include('header.php');
                     get_session_wines(); 
                 }
                 else{
-                    $results=get_wine_info(process_form($_POST)); 
-                    echo "<button type='button' onclick='tweet()'>Tweet your results</button> ";
-                    
+                    get_wine_info(process_form($_POST)); 
                 }
 
-				
+				send_tweet("");            
             
             ?>
 

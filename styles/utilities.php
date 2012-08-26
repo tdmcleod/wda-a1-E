@@ -1,25 +1,5 @@
 <?php
 
-
-if(function_exists($_GET["function"])){
-    $func = $_GET['function'];
-    $func($_GET["message"]);
-}
-
-function send_tweet($messages){
-    include 'twitter_admin.php';
-    $msg_string="My Wines for Today are:\n\r";
-    $msg = explode("|", $messages);
-    foreach ($msg as $m){
-        $msg_string.="Wine Name: ".$m. "\n\r";
-    }
-    
-	print_r($tweet);
-    $response=$tweet->post('statuses/update',array('status'=>$msg_string));
-	echo print_r($response);
-}
-
-
 function connect() {
 
     $pdo = new PDO("mysql:host=yallara.cs.rmit.edu.au;dbname=winestore;port=59443", "td_mcleod", "blowfish1") or die("Could not connect");
