@@ -58,8 +58,8 @@
                 function get_wines(){
                     var name_string="";
                     var names=document.getElementsByName("wine_name");
-                    for(var e in names){
-                        name_string = name_string + names[e].innerHTML+"|";
+                    for(var e=0;e<names.length;e++){
+                        name_string = name_string + names[e].innerHTML+",";
                     }
                     
                     return name_string;
@@ -82,11 +82,20 @@
                 function display_results(message){
                     
                   $(document).ready(function(){
-                     var msg = "<div style='height:50px;width:200px;background-color:#000;position:fixed;top:0;left:45%;z-index:200;'>"+message+"</div>";
-                     jQuery("body").append(msg).show('slow');
+                     var msg = "<div class='results_box' style='display:none;'>"+message+"<br /><button type='button' onclick='remove()' class='remove_button'>Ok</button></div>";
+                     jQuery("body").append(msg);
+                     jQuery(".results_box").show(1000);
+                     
                   });
                 }
                 
+                 
+                 function remove(){
+                     $(document).ready(function(){
+                         jQuery('.results_box').hide(1000);
+                            
+                        });
+                 }
                 
                 
             </script>

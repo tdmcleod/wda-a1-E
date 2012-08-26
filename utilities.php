@@ -8,15 +8,14 @@ if(function_exists($_GET["function"])){
 
 function send_tweet($messages){
     include 'twitter_admin.php';
-    $msg_string="My Wines for Today are:\n\r";
-    $msg = explode("|", $messages);
-    foreach ($msg as $m){
-        $msg_string.="Wine Name: ".$m. "\n\r";
+    $msg_string="My Wines for Today are: ". $messages;
+   
+    if(strlen($msg_string) >=140){
+        $msg_string = substr($msg_string, 0,139);
     }
     
-	print_r($tweet);
     $response=$tweet->post('statuses/update',array('status'=>$msg_string));
-	echo print_r($response);
+	echo "Tweeted!";
 }
 
 
